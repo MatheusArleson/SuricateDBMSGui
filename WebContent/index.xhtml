@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>SuricateDBMSGui</title>
+		
+		<link rel="shortcut icon" type="image/x-icon" href="#{resource['images/favicon.ico']}"/>
+
+		<style type="text/css">
+			.ui-widget {
+				font-size: 12px !important;
+			}
+			
+			html{
+				background-color: #CCCCCC;
+			}
+
+			.ui-state-disabled{
+				opacity: 1 !important;
+			}
+			
+		</style>
+		
+		<!-- INITIALIZATION OF EMPTY CONTAINER -->
+		<h:outputScript>
+			$( document ).ready(function() {
+			});
+			
+			$( window ).resize(function() {
+			});
+		
+			function showLoading(){
+				PF('loading').show();
+			}
+			
+			function hideLoading(){
+				PF('loading').hide();
+			}
+			
+			function showFileUploadDialog(){
+				PF('fileUploadDialog').show();
+			}
+			
+			function hideFileUploadDialog(){
+				PF('fileUploadDialog').hide();
+			}
+		</h:outputScript>
+		
+	</h:head>
+
+	<h:body>
+		
+		<h:form id="mainForm">
+		
+			<p:messages id="messages" 
+						showDetail="false" 
+						autoUpdate="true" 
+						closable="true">
+			</p:messages>
+			
+			<div 	id="mainDiv"
+					class="ui-fluid">
+					
+				<p:panelGrid 	id="topGrid"
+								columns="2" 
+								columnClasses="ui-grid-col-4,ui-grid-col-8" 
+								layout="grid" 
+								styleClass="ui-panelgrid-blank">
+						
+					
+				
+				</p:panelGrid>
+				
+				<p:panelGrid 	id="bottomGrid"
+								columns="2" 
+								columnClasses="ui-grid-col-4,ui-grid-col-8" 
+								layout="grid" 
+								styleClass="ui-panelgrid-blank">
+					
+					
+				</p:panelGrid>
+				
+			</div>
+			
+		</h:form>
+
+		<h:form id="loadingDialogForm">
+			<p:dialog	id="loadingDialog" widgetVar="loading" header="Loading..."
+						width="225px" height="230px" modal="true" responsive="true"
+						position="center" resizable="false" draggable="false"
+						minimizable="false" maximizable="false" closable="false"
+						closeOnEscape="false" showEffect="clip" hideEffect="clip">
+				<h:panelGroup id="loadindPanel">
+					<h:panelGrid columns="1">
+						<h:graphicImage library="images" name="xgh.jpg" />
+						<h:graphicImage library="images" name="loading.gif"
+							style="margin-left: 80px;" />
+					</h:panelGrid>
+				</h:panelGroup>
+			</p:dialog>
+		</h:form>
+
+		<h:form id="fileDialogForm" enctype="multipart/form-data">
+			<p:dialog 	id="fileDialog" widgetVar="fileUploadDialog" header="Upload File"
+						modal="true" responsive="true" 
+						resizable="false" draggable="false"
+						minimizable="false" maximizable="false"
+						closable="true" closeOnEscape="true"
+						showEffect="clip" hideEffect="clip">
+				<h:panelGroup id="uploadFilePanel">
+
+					<p:fileUpload	mode="advanced" multiple="false" auto="false"
+									value="#{mainPageBean.uploadedFile}" 
+									fileUploadListener="#{mainPageBean.fileUploadListener}"
+									update=":mainForm"
+									label="Choose File" uploadLabel="Send" cancelLabel="Clear"
+									allowTypes="/(\.)(txt)$/" accept=".txt"
+									invalidFileMessage="Only text files are allowed. (.txt)"
+									sizeLimit="1024" invalidSizeMessage="File exceed file size limit."
+									onstart="showLoading();"
+									oncomplete="hideLoading();">
+					</p:fileUpload>
+				
+				</h:panelGroup>
+			</p:dialog>
+		</h:form>
+		
+		<h:form id="tooltipsForm">
+			
+			<h:panelGroup id="tpPanel">
+				
+			</h:panelGroup>
+			
+		</h:form>
+		
+	</h:body>
+	
+</html>
