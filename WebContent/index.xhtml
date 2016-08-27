@@ -22,6 +22,7 @@
 			}
 
 			.ui-state-disabled{
+				background-color: #D8D8D8 !important;
 				opacity: 1 !important;
 			}
 			
@@ -64,28 +65,93 @@
 						closable="true">
 			</p:messages>
 			
-			<div 	id="mainDiv"
-					class="ui-fluid">
+			<div id="mainDiv" class="ui-fluid">
+				<h:panelGroup id="mainGroup">
 					
-				<p:panelGrid 	id="topGrid"
-								columns="2" 
-								columnClasses="ui-grid-col-4,ui-grid-col-8" 
-								layout="grid" 
-								styleClass="ui-panelgrid-blank">
+					<h:panelGroup id="pgTop">
+					
+						<p:panelGrid 	id="topGrid"
+										columns="1" 
+										columnClasses="ui-grid-col-12" 
+										layout="grid" 
+										styleClass="ui-panelgrid-blank">
+										
+							<p:fieldset	id="fsWorkspace"
+										legend="Workspace">
+								
+								<p:panelGrid 	id="pgWorkspaceFolder"
+												columns="2" 
+												columnClasses="ui-grid-col-0,ui-grid-col-12" 
+												layout="grid" 
+												styleClass="ui-panelgrid-blank">
+									
+									<p:outputLabel for="itWorkspaceFolder" value="Path:"/>	
+									<p:inputText	id="itWorkspaceFolder"
+													value="#{mainPageBean.getWorkspaceFolderAbsolutePath()}"
+													readonly="true" disabled="true">
+									</p:inputText>
+									
+								</p:panelGrid>
+								
+								<p:panelGrid 	id="pgWorkspaceActions"
+												columns="3" 
+												columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2" 
+												layout="grid" 
+												styleClass="ui-panelgrid-blank">
+									
+									<p:commandButton	id="btnChooseWorkspace"
+														value="Choose"
+														actionListener="#{mainPageBean.defineWorkspace()}"
+														process="@this"
+														update="@form">
+									</p:commandButton>
+									
+									<p:commandButton	id="btnSaveWorkspace"
+														value="Save"
+														rendered="#{mainPageBean.renderBtnSaveWorkspace()}"
+														actionListener="#{mainPageBean.saveWorkspace()}"
+														process="@this"
+														update="@form">
+									</p:commandButton>
+									
+									<p:commandButton	id="btnUploadFile"
+														value="Upload File"
+														rendered="#{mainPageBean.renderBtnUploadFile()}"
+														actionListener="#{mainPageBean.clearUploadedFile()}"
+														process="@this"
+														update="@this"
+														onstart="showLoading();"
+														oncomplete="hideLoading();showFileUploadDialog();">
+									</p:commandButton>
+									
+								</p:panelGrid>
+								
+							</p:fieldset>
+										
+						</p:panelGrid>
+					
+					</h:panelGroup>	
+					
+					<h:panelGroup id="pgBottom" rendered="#{mainPageBean.renderBottomGroup()}">
+					
+						<p:panelGrid 	id="bottomGrid"
+										columns="2" 
+										columnClasses="ui-grid-col-4,ui-grid-col-8" 
+										layout="grid" 
+										styleClass="ui-panelgrid-blank">
+							
+							<p:fieldset legend="Tables">
+							</p:fieldset>
+							
+							<p:fieldset legend="Contents">
+							</p:fieldset>
+							
+						</p:panelGrid>
 						
-					
+					</h:panelGroup>
 				
-				</p:panelGrid>
-				
-				<p:panelGrid 	id="bottomGrid"
-								columns="2" 
-								columnClasses="ui-grid-col-4,ui-grid-col-8" 
-								layout="grid" 
-								styleClass="ui-panelgrid-blank">
-					
-					
-				</p:panelGrid>
-				
+				</h:panelGroup>
+			
 			</div>
 			
 		</h:form>

@@ -1,5 +1,6 @@
 package br.com.xavier.suricate.dbms.gui.view;
 
+import java.io.File;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
@@ -24,21 +25,76 @@ public class MainPageBean implements Serializable {
 	
 	//XXX PROPERTIES
 	private UploadedFile uploadedFile;
+	private File workspaceFolder;
 	
 	//XXX CONSTRUCTOR
 	public MainPageBean() { }
 	
 	@PostConstruct
 	private void initialize(){
+	}
+	
+	//XXX VIEW METHODS
+	public boolean renderBottomGroup(){
+		if(workspaceFolder == null){
+			return false;
+		}
 		
+		return true;
 	}
 	
 	//XXX FILE UPLOAD METHODS
+	public boolean renderBtnUploadFile(){
+		if(workspaceFolder == null){
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public void clearUploadedFile(){
+		this.uploadedFile = null;
+	}
+	
 	public void graphFileUploadListener(FileUploadEvent event){
 		this.uploadedFile = event.getFile();
 	}
 	
+	//XXX CHOOSE WORKSPACE METHODS
+	public String getWorkspaceFolderAbsolutePath(){
+		if(workspaceFolder != null){
+			return workspaceFolder.getAbsolutePath();
+		} else {
+			return "No workspace loaded...";
+		}
+	}
+	
+	public void defineWorkspace(){
+		workspaceFolder = service.getWorkspaceFolder();
+	}
+	
+	//XXX SAVE WORKSPACE METHODS
+	public boolean renderBtnSaveWorkspace(){
+		if(workspaceFolder == null){
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public void saveWorkspace(){
+		System.out.println("#> SAVE WORKSPACE METHOD CALLED");
+	}
+	
 	//XXX GETTERS/SETTERS
+	public File getWorkspaceFolder() {
+		return workspaceFolder;
+	}
+	
+	public void setWorkspaceFolder(File workspaceFolder) {
+		this.workspaceFolder = workspaceFolder;
+	}
+	
 	public UploadedFile getUploadedFile() {
 		return uploadedFile;
 	}
